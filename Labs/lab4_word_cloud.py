@@ -38,7 +38,7 @@ class WordCloud:
 
         fo.close()
 
-
+    #TEST
     # opens the input file gettisburg.txt
     # remember to open in in the correct mode
     # reads the file line by line
