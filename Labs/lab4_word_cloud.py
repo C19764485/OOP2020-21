@@ -28,8 +28,9 @@ class WordCloud:
             </head>\
             <body>\
             <div style="text-align: center; vertical-align: middle; font-family: arial; color: white; background-color:black; border:1px solid black">')
-
         # your code goes here!
+        # Generate word cloud
+
         fo.write('<span style="font-size: 20px"> HELLO </span>')
 
         fo.write('</div>\
@@ -38,7 +39,6 @@ class WordCloud:
 
         fo.close()
 
-    #TEST
     # opens the input file gettisburg.txt
     # remember to open in in the correct mode
     # reads the file line by line
@@ -51,6 +51,28 @@ class WordCloud:
         my_dict = {}
         # your code goes here:
 
+        # We are accessing our text file which contains the plain text
+        fl = open("gettisburg.txt", "r")
+        wordz = fl.read()
+        fl.close()
+
+        # Removing ',' and '.' from the list of the words by replacing them with empty characters
+        wordlist = wordz.replace(',', '').replace('.', '').split()
+        wordfreq = []
+        for word in wordlist:
+            wordfreq.append(wordlist.count(word))
+        # Creating dictionary for our wordlist
+        it = iter(wordlist)
+        dictionary = dict(zip(it, wordfreq))
+
+        print("List\n" + str(wordlist) + "\n")
+        print("Dictionary\n" + str(dictionary))
+
+        # Copying our dictionary into a new created csv file
+        fc = open("dictionary.csv", "w")
+        fc.write("%s,%s\n" % (dictionary, dictionary.keys))
+        fc.close()
+
         return my_dict
 
     # helper function that is called from
@@ -61,9 +83,10 @@ class WordCloud:
     # word occurance counter to 1
     # returns a dictionary
     def add_to_dict(self, word, the_dict):
-        # your code goes here
-
+        #     # your code goes here
+        
         return the_dict
 
 
 wc = WordCloud()
+wc.add_to_dict()
