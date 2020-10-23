@@ -13,7 +13,7 @@ class WordCloud:
         # you might like to run the following line only
         # if there wasn't a problem creating the dictionary
         self.create_html(self.my_dict)
-
+        
     # this function creates the actual html file
     # takes a dictionary as an argument
     # it helps to multiply the key/occurance of word number with 10
@@ -31,8 +31,13 @@ class WordCloud:
         # your code goes here!
         # Generate word cloud
 
-        fo.write('<span style="font-size: 20px"> HELLO </span>')
-
+        # fo.write('<span style="font-size: 20px"> HELLO </span>')
+        for key in the_dict.keys():
+            fo.write('<span style="font-size: ')
+            fo.write(str(the_dict[key] * 10))
+            fo.write('px"> ')
+            fo.write(key)
+            fo.write('</span>')
         fo.write('</div>\
             </body>\
             </html>')
@@ -52,27 +57,25 @@ class WordCloud:
         # your code goes here:
 
         # We are accessing our text file which contains the plain text
-        fl = open("gettisburg.txt", "r")
-        wordz = fl.read()
-        fl.close()
-
-        # Removing ',' and '.' from the list of the words by replacing them with empty characters
-        wordlist = wordz.replace(',', '').replace('.', '').split()
-        wordfreq = []
-        for word in wordlist:
-            wordfreq.append(wordlist.count(word))
-        # Creating dictionary for our wordlist
-        it = iter(wordlist)
-        dictionary = dict(zip(it, wordfreq))
-
-        print("List\n" + str(wordlist) + "\n")
-        print("Dictionary\n" + str(dictionary))
-
-        # Copying our dictionary into a new created csv file
-        fc = open("dictionary.csv", "w")
-        fc.write("%s,%s\n" % (dictionary, dictionary.keys))
-        fc.close()
-
+        try:
+            fl = open("gettisburg.txt", "r")
+        except Exception as e:
+            my_dict = False
+            print("There was an error trying to create the dictionary file.")
+        else:
+            try:
+                stops = open("stops.txt", "r")
+            except Exception as e:
+                print(e)
+            else:
+                stop_list = list(stops.read().split("\n"))
+                stops.close()
+            finally:
+                for line in fl:
+                    line = line.lower().split()
+                    for wordsz in line:
+                        self.add_to_dict(wordsz, my_dict)
+            fl.close()
         return my_dict
 
     # helper function that is called from
@@ -84,9 +87,13 @@ class WordCloud:
     # returns a dictionary
     def add_to_dict(self, word, the_dict):
         #     # your code goes here
-        
-        return the_dict
+        for key in the_dict.keys():
+            if key == word:
+                the_dict[key] += 1
+                return the_dict
+        else:
+            the_dict[word] = 1
+            return the_dict
 
 
 wc = WordCloud()
-wc.add_to_dict()
