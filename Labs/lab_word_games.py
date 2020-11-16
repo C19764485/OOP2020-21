@@ -79,17 +79,58 @@ class WordGames:
         print("User input was: "+self.the_words)
 
 class WordDuplication(WordGames): # you implement this and provide docstrings
-    pass
+    def word_play(self):
+        print('The user input is now doubled: ')
+        print(self.the_words + ' ' + self.the_words)
 
 class WordScramble(WordGames): # you implement this and provide docstrings
-    pass
+    def word_play(self):
+
+        sentence2 = ''
+        sentence = self.the_words.split()
+        # super().__init__(f_name, l_name)
+
+        # Get the word from the sentence
+        for index, word in enumerate(sentence):
+            # check the length of the word > 3
+            if len(word) > 3:
+                # swap the indice of 2 and last element
+                temp_word = list(
+                    word)  # we use a list for item assignment, but could also just use another new string variable
+                if (',' in temp_word) or ('.' in temp_word):
+                    temp = temp_word[1]
+                    temp_word[1] = temp_word[-3]
+                    temp_word[-3] = temp
+                else:
+                    # split the word in to a list of characters and swap
+                    # this swap leaves first and last in tact
+                    temp = temp_word[1]
+                    temp_word[1] = temp_word[-2]
+                    temp_word[-2] = temp
+
+                # Join the characters together and form the word
+                swapped_word = ''.join(temp_word)
+                # replace the previous word at that position with the new swapped word
+                sentence[index] = swapped_word
+            else:
+                # Since the length of the word < 3 don't swap the word
+                sentence[index] = word
+
+        # Join all the words with a space
+        sentence2 = ' '.join(sentence)
+        print(sentence2)
 
 
 # prints the docstrings info
 # if this class was a python module
-print(WordGames.__doc__)
+# print(WordGames.__doc__)
 
 # Create an instances of the classes here:
-wg = WordGames()
-wg.word_play()
+# wg = WordGames()
+# wg.word_play()
 
+# wd = WordDuplication()
+# wd.word_play()
+
+ws = WordScramble()
+ws.word_play()
