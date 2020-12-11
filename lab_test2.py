@@ -1,7 +1,7 @@
 # Object Oriented Programming
 # TU856 & TU858
 # Semester 1, 2020-21
-# B. Schoen-Phelan
+# Panagiotis Bampilis - C19764485
 # 11-12-2020
 
 class Document:
@@ -30,14 +30,38 @@ class Document:
         self.characters.insert(self.cursor, character)
         self.cursor += 1
 
-    def delete(self):
+    @property
+    def insert_values(self):
         """
-        Method deletes a character from the current
+         Created getter to return self.characters
+         to the user.
+        """
+        return self.characters
+
+    @insert_values.setter
+    def insert_values(self, value):
+        """
+        Created setter to set the user characters
+        into value which is returned in its decorator.
+        """
+        # variable that returns self.characters
+        self.characters = value
+
+    # Changed the class method from delete to remove
+    def remove(self):
+        """
+        Method remove a character from the current
         cursor position.
         Arguments: none
         Returns: none
         """
-        del self.characters[self.cursor]
+        # For loop that removes safely this time
+        # Unlike delete function
+        try:
+            for letter in self.characters:
+                self.characters.remove(letter)
+        except:
+            raise ValueError
 
     def save(self):
         """
@@ -77,8 +101,15 @@ class Document:
 
         Returns: none
         """
-        self.cursor -= steps
-
+        # Error catching by using try except
+        # to prevent the user from entering above 12
+        try:
+            if steps > 12 or steps < 1:
+                raise ValueError("You need to enter a number below 12")
+            else:
+                self.cursor -= steps
+        except:
+            print("You can't enter above 12")
 
 # initialising an object and using the class
 doc = Document("lab_t2.txt")
@@ -87,7 +118,11 @@ characters = 'fake mews'
 for letter in characters:
     doc.insert(letter)
 
-doc.backward(4)
-doc.delete()
-doc.insert('n')
-doc.save()
+# Exception handling to prevent the program from crashing
+try:
+    doc.backward(4)
+    doc.remove()
+    doc.insert('n')
+    doc.save()
+except:
+    print("Unexpected error")
