@@ -15,6 +15,25 @@ class Document:
         self.cursor = 0
         self.filename = file_name
 
+    # Creating a getter for the value to be returned
+    @property
+    def insert_values(self):
+        """
+         Created getter to return self.characters
+         to the user.
+        """
+        return self.characters
+
+    # Creating a setter for the value to be set
+    @insert_values.setter
+    def insert_values(self, value):
+        """
+        Created setter to set the user characters
+        into value which is returned in its decorator.
+        """
+        # variable that returns self.characters
+        self.characters = value
+
     def insert(self, character):
         """
         Method inserts a character at the current
@@ -29,23 +48,6 @@ class Document:
         """
         self.characters.insert(self.cursor, character)
         self.cursor += 1
-
-    @property
-    def insert_values(self):
-        """
-         Created getter to return self.characters
-         to the user.
-        """
-        return self.characters
-
-    @insert_values.setter
-    def insert_values(self, value):
-        """
-        Created setter to set the user characters
-        into value which is returned in its decorator.
-        """
-        # variable that returns self.characters
-        self.characters = value
 
     # Changed the class method from delete to remove
     def remove(self):
@@ -125,4 +127,4 @@ try:
     doc.insert('n')
     doc.save()
 except:
-    print("Unexpected error")
+    print("Unexpected error, please check your inputs")
